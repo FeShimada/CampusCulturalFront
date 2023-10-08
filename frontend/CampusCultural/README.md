@@ -9,6 +9,8 @@ rnfunc (atalho para criar função rapidamente)
 
 npx expo install react-native-animatable
 
+ expo-font expo-app-loading
+
 
 estrutura de pastas:
 
