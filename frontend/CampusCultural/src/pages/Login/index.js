@@ -1,19 +1,40 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useFonts } from "expo-font"
-import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen'
+import * as Font from 'expo-font'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function Login() {
 
-    let [ fontsLoaded ] = useFonts({
-        'guess-sans-ultra': require('../../assets/fonts/guess-sans-ultra.ttf')
-    })
-    if(!fontsLoaded) {
-        return <AppLoading/>
+    const [appReady, setAppReady] = useState(false)
+
+    useEffect(() => {
+        (async () => {
+        try {
+            await SplashScreen.preventAutoHideAsync()
+            await Font.loadAsync({
+                'guess-sans': require('../../../assets/fonts/guess-sans.ttf')
+            })
+        } catch (e) {
+            console.warn(e)
+        } finally {
+            setAppReady(true)
+        }
+        })()
+    }, [])
+
+    const onLayout = useCallback(() => {
+        if (appReady) {
+        SplashScreen.hideAsync()
+        }
+    }, [appReady])
+
+    if (!appReady) {
+        return null
     }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={onLayout}>
 
             <View style={styles.containerTitle}>
                 <Text style={styles.title}>CAMPUS CULTURAL</Text>
@@ -59,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title:{
-        fontFamily:'guess-sans-ultra',
+        fontFamily:'guess-sans',
         fontSize: 32,
         color: '#48b2fe',
     },
