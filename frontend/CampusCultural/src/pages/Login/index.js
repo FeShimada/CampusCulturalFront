@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
 import { useCallback, useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Login() {
+
+    const navigation = useNavigation()
 
     const [appReady, setAppReady] = useState(false)
 
@@ -49,7 +52,7 @@ export default function Login() {
             </View>
 
             <View style={styles.containerButtom}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={() => navigation.navigate('AppNav')} style={styles.button}>
                     <Text style={styles.buttonText}>ENTRAR</Text>
                 </TouchableOpacity>
 
