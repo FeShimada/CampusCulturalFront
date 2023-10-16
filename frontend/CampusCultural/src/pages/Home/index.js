@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import HomeCard from '../../components/HomeCard';
 
 /** MÉTODOS AUXILIARES PARA SIMULAR UMA API */
@@ -17,8 +17,8 @@ function getFakeData() {
   for (let i = 0; i < qtdDados; i++) {
     dataAux.push({
       id: i.toString(),
-      personIcon: require('./assets/kenzo.jpeg'),
-      personName: 'Kenzo',
+      personIcon: require('./assets/personaImage.jpg'),
+      personName: 'Maria',
       eventImage: require('./assets/mockEventImage.jpeg'),
       eventTitle: 'Lorem ipsum dolor sit amet'
     });
