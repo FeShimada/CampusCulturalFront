@@ -15,7 +15,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     const backendUrl = 'http://192.168.0.102:3000';
-
+    
     try {
       const response = await axios.post(`${backendUrl}/login`, {
         email,
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 12,
     height: 50,
+    padding: 10
   },
   containerButtom: {
     flex: 1,

@@ -48,7 +48,7 @@ async function apiRequestSimulation() {
 export default function Calendario() {
 
   const [data, setData] = useState([]);
-  const [animating, seAnimating] = useState(false);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     loadData()
@@ -81,7 +81,7 @@ export default function Calendario() {
   *
   */
   function loadData(filters) {
-    seAnimating(true)
+    setAnimating(true)
 
     apiRequestSimulation()
       .then((res) => {
@@ -90,7 +90,7 @@ export default function Calendario() {
       .catch((err) => {
         console.log(err)
       })
-      .finally(() => seAnimating(false));
+      .finally(() => setAnimating(false));
   }
 }
 

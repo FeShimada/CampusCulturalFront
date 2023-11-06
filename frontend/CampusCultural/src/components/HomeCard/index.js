@@ -43,7 +43,9 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: '100%',
     width: deviceWidth - 100,
-    borderRadius: 20
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: '#dedfdf',
   },
   titleStyle: {
     fontSize: 20,

@@ -44,7 +44,11 @@ function AppNav() {
                 name='Home'
                 component={Home}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
+                    headerStyle: {
+                        backgroundColor: '#e7e7e7',
+                    },
+                    headerTitle: '',
                     tabBarIcon: ({ color, size, focused }) => {
                         return <View
                             style={[
@@ -64,7 +68,11 @@ function AppNav() {
                 name='Calendario'
                 component={Calendario}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
+                    headerStyle: {
+                        backgroundColor: '#e7e7e7',
+                    },
+                    headerTitle: '',
                     tabBarIcon: ({ color, size, focused }) => {
                         return <View
                             style={[
@@ -84,7 +92,11 @@ function AppNav() {
                 name='Perfil'
                 component={Perfil}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
+                    headerStyle: {
+                        backgroundColor: '#e7e7e7',
+                    },
+                    headerTitle: '',
                     tabBarIcon: ({ color, size, focused }) => {
                         return <View
                             style={[
@@ -95,8 +107,8 @@ function AppNav() {
                             <Ionicons name="person" size={size} color='white' />
                             <Text style={styles.iconText}>PERFIL</Text>
                         </View>
-                    }
-
+                    },
+                    tabBarHideOnKeyboard: true
                 }}
             />
         </Tab.Navigator>
@@ -108,7 +120,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         padding: 5,
         width: 80,
-        height: 60,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'center'
     },

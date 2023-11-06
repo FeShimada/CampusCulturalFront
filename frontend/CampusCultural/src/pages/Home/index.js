@@ -42,7 +42,7 @@ async function apiRequestSimulation() {
 
 export default function Home() {
 
-  const [animating, seAnimating] = useState(false);
+  const [animating, setAnimating] = useState(false);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function Home() {
   *
   */
   function loadData(filters) {
-    seAnimating(true)
+    setAnimating(true)
 
     apiRequestSimulation()
       .then((res) => {
@@ -87,7 +87,7 @@ export default function Home() {
       .catch((err) => {
         console.log(err)
       })
-      .finally(() => seAnimating(false));
+      .finally(() => setAnimating(false));
   }
 }
 
