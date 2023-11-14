@@ -103,7 +103,7 @@ export default function Login() {
           <TouchableOpacity style={styles.buttonSubItem} onPress={() => navigation.navigate('PassawordRecovery')}>
             <Text style={styles.subItemText}>Esqueceu a senha</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonSubItem}>
+          <TouchableOpacity style={styles.buttonSubItem} onPress={() => navigation.navigate('Cadastro')}>
             <Text style={styles.subItemText}>Cadastrar</Text>
           </TouchableOpacity>
         </View>

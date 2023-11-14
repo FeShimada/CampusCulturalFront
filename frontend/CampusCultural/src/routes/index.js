@@ -10,6 +10,7 @@ import { TipoPessoaContext } from '../contexts/TipoPessoaContext';
 import ViewProfessor from '../pages/ViewProfessor';
 import ViewPerfilAluno from '../pages/ViewPerfilAluno';
 import PasswordRecovery from '../pages/PasswordRecovery';
+import Cadastro from '../pages/Cadastro';
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -25,6 +26,11 @@ export default function Routes() {
             <Stack.Screen
                 name='PassawordRecovery'
                 component={PasswordRecovery}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Cadastro'
+                component={Cadastro}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
