@@ -100,7 +100,7 @@ export default function Login() {
           <Text style={styles.buttonText}>ENTRAR</Text>
         </TouchableOpacity>
         <View style={styles.buttonSubItens}>
-          <TouchableOpacity style={styles.buttonSubItem}>
+          <TouchableOpacity style={styles.buttonSubItem} onPress={() => navigation.navigate('PassawordRecovery')}>
             <Text style={styles.subItemText}>Esqueceu a senha</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonSubItem}>

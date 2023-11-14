@@ -9,6 +9,7 @@ import Calendario from '../pages/Calendario';
 import { TipoPessoaContext } from '../contexts/TipoPessoaContext';
 import ViewProfessor from '../pages/ViewProfessor';
 import ViewPerfilAluno from '../pages/ViewPerfilAluno';
+import PasswordRecovery from '../pages/PasswordRecovery';
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -19,6 +20,11 @@ export default function Routes() {
             <Stack.Screen
                 name='Login'
                 component={Login}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='PassawordRecovery'
+                component={PasswordRecovery}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
