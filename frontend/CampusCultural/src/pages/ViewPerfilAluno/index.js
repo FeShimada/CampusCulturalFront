@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import PerfilIcon from '../../components/PerfilIcon';
-import { useNavigation } from '@react-navigation/native';
 
 /** MÉTODOS AUXILIARES PARA SIMULAR UMA API */
 
@@ -40,7 +39,7 @@ async function apiRequestSimulation() {
 }
 /** MÉTODOS AUXILIARES PARA SIMULAR UMA API */
 
-export default function Perfil() {
+export default function ViewPerfilAluno() {
 
     const [data, setData] = useState({});
     const [animating, setAnimating] = useState(false);

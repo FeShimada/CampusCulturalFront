@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Login from '../pages/Login'
 import Home from '../pages/Home';
@@ -6,7 +6,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import Calendario from '../pages/Calendario';
-import Perfil from '../pages/Perfil';
+import { TipoPessoaContext } from '../contexts/TipoPessoaContext';
+import ViewProfessor from '../pages/ViewProfessor';
+import ViewPerfilAluno from '../pages/ViewPerfilAluno';
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -28,7 +30,21 @@ export default function Routes() {
     );
 }
 
+  const PerfilScreen = () => {
+    const { tpPessoa } = useContext(TipoPessoaContext)
+  
+    const PerfilComponent = tpPessoa === 'professor' ? ViewProfessor : ViewPerfilAluno;
+  
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Perfil" component={PerfilComponent} options={{ headerShown: false }} />
+        <Stack.Screen name="ViewPerfilAluno" component={ViewPerfilAluno} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    );
+  };
+
 function AppNav() {
+
     return (
         <Tab.Navigator
             screenOptions={{
@@ -89,8 +105,8 @@ function AppNav() {
             />
 
             <Tab.Screen
-                name='Perfil'
-                component={Perfil}
+                name='PerfilScreen'
+                component={PerfilScreen}
                 options={{
                     headerShown: true,
                     headerStyle: {

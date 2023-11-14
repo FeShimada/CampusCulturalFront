@@ -15,8 +15,10 @@ export default function Login() {
 
   const handleLogin = async () => {
     const backendUrl = 'http://192.168.0.102:3000';
+
+    navigation.navigate('AppNav');
     
-    try {
+    /* try {
       const response = await axios.post(`${backendUrl}/login`, {
         email,
         senha,
@@ -41,7 +43,7 @@ export default function Login() {
         setError('Erro durante o login');
         console.error('Erro durante o login:', error);
       }
-  }
+  } */
   
   };
 
