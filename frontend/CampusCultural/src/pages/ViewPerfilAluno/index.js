@@ -1,52 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import PerfilIcon from '../../components/PerfilIcon';
-
-/** MÉTODOS AUXILIARES PARA SIMULAR UMA API */
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getFakeData() {
-    let dataAux = {};
-
-    dataAux = {
-        id: "123",
-        nome: "Maria",
-        sobrenome: "Rodrigues",
-        email: "claudia123@gmail.com",
-        senha: "senha",
-        personImage: require('../Home/assets/personaImage.jpg'),
-    };
-
-    return dataAux;
-}
-
-async function apiRequestSimulation() {
-    return new Promise((resolve, reject) => {
-        if (getRandomInt(0, 100) === 22) {
-            reject('Ocorreu um erro');
-        } else {
-            setTimeout(() => {
-                resolve({ data: getFakeData(), status: 200 });
-            }, 3000);
-        }
-    })
-}
-/** MÉTODOS AUXILIARES PARA SIMULAR UMA API */
+import { TipoPessoaContext } from '../../contexts/TipoPessoaContext';
+import axios from 'axios';
+import { BACKEND_URL } from '@env'
 
 export default function ViewPerfilAluno() {
 
     const [data, setData] = useState({});
     const [animating, setAnimating] = useState(false);
-    const [value, setValue] = useState(data);
+    const [initialValues, setInitialValues] = useState({
+        dsNome: '',
+        dsSobrenome: '',
+        dsEmail: '',
+        senha: '',
+    });
+    const { tpPessoa, setTpPessoa } = useContext(TipoPessoaContext)
 
     useEffect(() => {
-        loadData()
+        const buscarUsuario = async () => {
+            setAnimating(true)
+            try {
+                const response = await axios.get(`${BACKEND_URL}/usuario/` + tpPessoa.idUsuario).finally(() => setAnimating(false));
+                setInitialValues(response.data);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        buscarUsuario()
     }, [])
 
     return (
@@ -54,7 +36,7 @@ export default function ViewPerfilAluno() {
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
 
             <View style={styles.toastContainer}>
-                <Toast/>
+                <Toast />
             </View>
 
             <View style={styles.loading}>
@@ -62,40 +44,40 @@ export default function ViewPerfilAluno() {
             </View>
 
             <View style={styles.containerTitle}>
-                <PerfilIcon personImage={data.personImage} personName={data.nome} />
+                <PerfilIcon personImage={initialValues.dsImagem} personName={tpPessoa.dsNome} />
             </View>
             <View style={styles.containerForm}>
                 <Text style={styles.label}>Primeiro Nome</Text>
                 <TextInput
                     style={styles.input}
-                    value={value.nome}
+                    value={initialValues.dsNome}
                     onChangeText={(text) => {
-                        setValue({...value, nome: text})
+                        setInitialValues({ ...initialValues, dsNome: text })
                     }}
                 />
                 <Text style={styles.label}>Sobrenome</Text>
                 <TextInput
                     style={styles.input}
-                    value={value.sobrenome}
+                    value={initialValues.dsSobrenome}
                     onChangeText={(text) => {
-                        setValue({...value, sobrenome: text})
+                        setInitialValues({ ...initialValues, dsSobrenome: text })
                     }}
                 />
                 <Text style={styles.label}>Email</Text>
                 <TextInput
                     style={styles.input}
-                    value={value.email}
+                    value={initialValues.dsEmail}
                     onChangeText={(text) => {
-                        setValue({...value, email: text})
+                        setInitialValues({ ...initialValues, dsEmail: text })
                     }}
                 />
                 <Text style={styles.label}>Senha</Text>
                 <TextInput
                     style={styles.input}
                     secureTextEntry={true}
-                    value={value.senha}
+                    value={initialValues.senha}
                     onChangeText={(text) => {
-                        setValue({...value, senha: text})
+                        setInitialValues({ ...initialValues, senha: text })
                     }}
                 />
                 <TouchableOpacity onPress={handleSubmit} style={styles.button}>
@@ -105,38 +87,24 @@ export default function ViewPerfilAluno() {
         </ScrollView>
     );
 
-    /**
-     * Carrega os dados
-     *
-    */
-    function loadData(filters) {
+    async function handleSubmit() {
         setAnimating(true)
 
-        apiRequestSimulation()
-            .then((res) => {
-                setData(res.data);
-                setValue(res.data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-            .finally(() => setAnimating(false));
-    }
-
-    function handleSubmit() {
-        setAnimating(true)
-        setTimeout(() => {
-
-            setData(value)
-
+        try {
+            await axios.put(`${BACKEND_URL}/usuario`, initialValues).finally(() => setAnimating(false));
+            setTpPessoa(initialValues)
             Toast.show({
                 type: 'success',
                 text1: 'Sucesso',
                 text2: 'Editado com sucesso'
             })
-
-            setAnimating(false)
-        }, 3000);
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Erro',
+                text2: 'Erro ao editar'
+            })
+        }
     }
 }
 

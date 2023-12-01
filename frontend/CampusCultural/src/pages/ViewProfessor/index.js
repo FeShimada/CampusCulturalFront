@@ -21,7 +21,6 @@ export default function ViewProfessor() {
             try {
                 const response = await axios.get(`${BACKEND_URL}/evento/usuario/` + tpPessoa.idUsuario).finally(() => setAnimating(false));
                 setData(response.data);
-                console.log(response.data)
             } catch (error) {
                 console.log(error)
             }
