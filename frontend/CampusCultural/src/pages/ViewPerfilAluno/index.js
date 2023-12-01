@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, ToastAndroid, Alert } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import PerfilIcon from '../../components/PerfilIcon';
 import { TipoPessoaContext } from '../../contexts/TipoPessoaContext';
 import axios from 'axios';
 import { BACKEND_URL } from '@env'
+import * as ImagePicker from 'expo-image-picker';
 
 export default function ViewPerfilAluno() {
 
@@ -31,6 +32,32 @@ export default function ViewPerfilAluno() {
         buscarUsuario()
     }, [])
 
+    const handleChangePhoto = async () => {
+        const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!granted) {
+            Alert.alert(
+                'Permissão necessária',
+                'Permita que sua aplicação acesse as imagens'
+            );
+        } else {
+            const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                base64: false,
+                aspect: [4, 4],
+                quality: 1,
+            });
+
+            if (canceled) {
+                ToastAndroid.show('Operação cancelada', ToastAndroid.SHORT);
+            } else {
+
+                console.log(assets[0].uri)
+                setInitialValues({...initialValues, dsImagem: assets[0].uri})
+            }
+        }
+    }
+
     return (
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
@@ -44,7 +71,7 @@ export default function ViewPerfilAluno() {
             </View>
 
             <View style={styles.containerTitle}>
-                <PerfilIcon personImage={initialValues.dsImagem} personName={tpPessoa.dsNome} />
+                <PerfilIcon personImage={initialValues.dsImagem} personName={tpPessoa.dsNome} handleChangePhoto={handleChangePhoto} />
             </View>
             <View style={styles.containerForm}>
                 <Text style={styles.label}>Primeiro Nome</Text>
