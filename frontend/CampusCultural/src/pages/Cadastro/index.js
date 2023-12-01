@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useFonts } from "expo-font"
-import AppLoading from 'expo-app-loading';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Cadastro() {
