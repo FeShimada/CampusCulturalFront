@@ -11,6 +11,7 @@ import ViewProfessor from '../pages/ViewProfessor';
 import ViewPerfilAluno from '../pages/ViewPerfilAluno';
 import PasswordRecovery from '../pages/PasswordRecovery';
 import Cadastro from '../pages/Cadastro';
+import { TipoUsuarioEnum } from '../enumerations/tipo-usuario-enum';
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -45,7 +46,7 @@ export default function Routes() {
   const PerfilScreen = () => {
     const { tpPessoa } = useContext(TipoPessoaContext)
   
-    const PerfilComponent = tpPessoa === 'professor' ? ViewProfessor : ViewPerfilAluno;
+    const PerfilComponent = tpPessoa.tpUsuario === TipoUsuarioEnum.PROFESSOR ? ViewProfessor : ViewPerfilAluno;
   
     return (
       <Stack.Navigator>

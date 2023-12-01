@@ -1,50 +1,39 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { BACKEND_URL } from '@env'
+import { TipoPessoaContext } from '../../contexts/TipoPessoaContext';
 
 export default function Login() {
   const navigation = useNavigation();
   const [appReady, setAppReady] = useState(false);
-  const [email, setEmail] = useState('');
+  const [dsEmail, setDsEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
+  const { setTpPessoa } = useContext(TipoPessoaContext)
 
   const handleLogin = async () => {
-    const backendUrl = 'http://192.168.0.102:3000';
 
-    navigation.navigate('AppNav');
-    
-    /* try {
-      const response = await axios.post(`${backendUrl}/login`, {
-        email,
+    try {
+      const response = await axios.post(`${BACKEND_URL}/usuario/login`, {
+        dsEmail,
         senha,
       });
 
+      setError('')
+
       if (response.status === 200) {
+        setTpPessoa(response.data)
         navigation.navigate('AppNav');
-      } else {
-        setError('Credenciais incorretas');
-      }
+      } 
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 401) {
-          setError('Credenciais incorretas');
-        } else if (error.response.status === 404) {
-          setError('URL não encontrada. Verifique a URL do servidor.');
-        } else {
-          setError('Erro durante o login');
-          console.error('Erro durante o login:', error);
-        }
-      } else {
-        setError('Erro durante o login');
-        console.error('Erro durante o login:', error);
-      }
-  } */
-  
+      setError("Credenciais incorretas")
+    }
+
   };
 
   useEffect(() => {
@@ -81,8 +70,8 @@ export default function Login() {
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.input}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+          value={dsEmail}
+          onChangeText={(text) => setDsEmail(text)}
         />
         <Text style={styles.label}>Senha</Text>
         <TextInput
@@ -91,10 +80,10 @@ export default function Login() {
           value={senha}
           onChangeText={(text) => setSenha(text)}
         />
+        {error === 'Credenciais incorretas' && (
+          <Text style={styles.errorText}>Credenciais incorretas</Text>
+        )}
       </View>
-      {error === 'Credenciais incorretas' && (
-        <Text style={styles.errorText}>Credenciais incorretas</Text>
-      )}
       <View style={styles.containerButtom}>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>ENTRAR</Text>
@@ -116,6 +105,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#d1ecff',
+  },
+  errorText: {
+    color: 'red'
   },
   containerTitle: {
     flex: 1,
@@ -167,7 +159,7 @@ const styles = StyleSheet.create({
   },
   buttonSubItem: {
     marginTop: 8,
-  }, 
+  },
   subItemText: {
     color: '#48b2fe',
     fontWeight: 'bold',

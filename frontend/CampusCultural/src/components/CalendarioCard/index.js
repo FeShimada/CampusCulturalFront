@@ -4,12 +4,20 @@ import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 export default function CalendarioCard(props) {
   const { eventDate, eventImage } = props;
 
+  const dateObj = new Date(eventDate);
+
+  const year = dateObj.getFullYear();
+  const month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); 
+  const day = dateObj.getDate().toString().padStart(2, '0');
+
+  const formattedDate = `${day}/${month}/${year}`;
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.dateContainer}>
-        <Text style={styles.date}>{eventDate}</Text>
+        <Text style={styles.date}>{formattedDate}</Text>
       </View>
-      <Image style={styles.imageStyle} source={eventImage} />
+      <Image style={styles.imageStyle} source={{ uri: eventImage }} onError={(error) => console.error('Erro ao carregar a imagem:', error.nativeEvent.error)} />
     </View>
   );
 }
@@ -20,7 +28,7 @@ const styles = StyleSheet.create({
     height: 120,
     marginBottom: 60,
     marginRight: 5,
-    marginLeft: 5 
+    marginLeft: 5
   },
   dateContainer: {
     display: 'flex',

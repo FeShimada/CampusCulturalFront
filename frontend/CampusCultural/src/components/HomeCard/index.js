@@ -7,10 +7,10 @@ export default function HomeCard(props) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.titleContainer}>
-        <Image style={styles.personIcon} source={personIcon} />
+        <Image style={styles.personIcon} source={{ uri: personIcon }} onError={(error) => console.error('Erro ao carregar a imagem:', error.nativeEvent.error)} />
         <Text style={styles.personName}>{personName}</Text>
       </View>
-      <Image style={styles.imageStyle} source={eventImage} />
+      <Image style={styles.imageStyle} source={{ uri: eventImage }} onError={(error) => console.error('Erro ao carregar a imagem:', error.nativeEvent.error)} />
       <Text style={styles.titleStyle}>{eventTitle}</Text>
     </View>
   );

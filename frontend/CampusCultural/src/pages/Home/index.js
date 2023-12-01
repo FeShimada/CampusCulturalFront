@@ -1,44 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import HomeCard from '../../components/HomeCard';
-
-/** MÉTODOS AUXILIARES PARA SIMULAR UMA API */
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getFakeData() {
-  const dataAux = [];
-
-  const qtdDados = getRandomInt(50, 100);
-  for (let i = 0; i < qtdDados; i++) {
-    dataAux.push({
-      id: i.toString(),
-      personIcon: require('./assets/personaImage.jpg'),
-      personName: 'Maria',
-      eventImage: require('./assets/mockEventImage.jpeg'),
-      eventTitle: 'Lorem ipsum dolor sit amet'
-    });
-  }
-
-  return dataAux;
-}
-
-async function apiRequestSimulation() {
-  return new Promise((resolve, reject) => {
-    if (getRandomInt(0, 100) === 22) {
-      reject('Ocorreu um erro');
-    } else {
-      setTimeout(() => {
-        resolve({ data: getFakeData(), status: 200 });
-      }, 3000);
-    }
-  })
-}
-/** MÉTODOS AUXILIARES PARA SIMULAR UMA API */
+import { BACKEND_URL } from '@env'
+import axios from 'axios';
 
 export default function Home() {
 
@@ -46,7 +10,16 @@ export default function Home() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    loadData()
+    const buscarEventos = async () => {
+      setAnimating(true)
+      try {
+        const response = await axios.get(`${BACKEND_URL}/evento`).finally(() => setAnimating(false));
+        setData(response.data);
+      } catch(error) {
+        console.log(error)
+      }
+    }
+    buscarEventos()
   }, [])
 
   return (
@@ -63,32 +36,15 @@ export default function Home() {
         keyExtractor={item => String(item.id)}
         renderItem={({ item }) =>
           <HomeCard
-            personIcon={item.personIcon}
-            personName={item.personName}
-            eventImage={item.eventImage}
-            eventTitle={item.eventTitle}
+            personIcon={item.usuario.dsImagem}
+            personName={item.usuario.dsNome}
+            eventImage={item.dsImagem}
+            eventTitle={item.dsTitulo}
           />
         }
       />
     </View>
   );
-
-  /**
-  * Carrega os dados
-  *
-  */
-  function loadData(filters) {
-    setAnimating(true)
-
-    apiRequestSimulation()
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-      .finally(() => setAnimating(false));
-  }
 }
 
 const styles = StyleSheet.create({

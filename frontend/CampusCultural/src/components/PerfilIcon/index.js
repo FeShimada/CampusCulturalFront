@@ -8,7 +8,7 @@ export default function PerfilIcon(props) {
 
     return (
         <View style={styles.container}>
-            <Image style={styles.personIcon} source={personImage} />
+            <Image style={styles.personIcon}  source={{ uri: personImage }} onError={(error) => console.error('Erro ao carregar a imagem:', error.nativeEvent.error)} />
             <Text style={[styles.personName, { color, fontSize }]}>{personName}</Text>
         </View>
     );
