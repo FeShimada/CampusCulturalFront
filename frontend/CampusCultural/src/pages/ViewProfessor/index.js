@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HomeCard from '../../components/HomeCard';
 import PerfilIcon from '../../components/PerfilIcon';
 import Icon from 'react-native-vector-icons/EvilIcons'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { TipoPessoaContext } from '../../contexts/TipoPessoaContext';
 import { BACKEND_URL } from '@env'
 import axios from 'axios';
@@ -15,18 +15,20 @@ export default function ViewProfessor() {
     const navigation = useNavigation();
     const { tpPessoa } = useContext(TipoPessoaContext)
 
-    useEffect(() => {
-        const buscarEventos = async () => {
-            setAnimating(true)
+    useFocusEffect(
+        React.useCallback(() => {
+          const buscarEventos = async () => {
+            setAnimating(true);
             try {
-                const response = await axios.get(`${BACKEND_URL}/evento/usuario/` + tpPessoa.idUsuario).finally(() => setAnimating(false));
-                setData(response.data);
+              const response = await axios.get(`${BACKEND_URL}/evento/usuario/` + tpPessoa.idUsuario).finally(() => setAnimating(false));
+              setData(response.data);
             } catch (error) {
-                console.log(error)
+              console.log(error);
             }
-        }
-        buscarEventos()
-    }, [])
+          }
+          buscarEventos();
+        }, []) 
+      );
 
     return (
         <View style={styles.container}>

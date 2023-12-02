@@ -3,24 +3,27 @@ import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import CalendarioCard from '../../components/CalendarioCard';
 import axios from 'axios';
 import { BACKEND_URL } from '@env'
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Calendario() {
 
   const [data, setData] = useState([]);
   const [animating, setAnimating] = useState(false);
 
-  useEffect(() => {
-    const buscarEventos = async () => {
-      setAnimating(true)
-      try {
-        const response = await axios.get(`${BACKEND_URL}/evento`).finally(() => setAnimating(false));
-        setData(response.data);
-      } catch(error) {
-        console.log(error)
+  useFocusEffect(
+    React.useCallback(() => {
+      const buscarEventos = async () => {
+        setAnimating(true);
+        try {
+          const response = await axios.get(`${BACKEND_URL}/evento`).finally(() => setAnimating(false));
+          setData(response.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
-    buscarEventos()
-  }, [])
+      buscarEventos();
+    }, []) 
+  );
 
   return (
     <View style={styles.container}>

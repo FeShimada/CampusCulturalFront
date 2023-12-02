@@ -137,13 +137,17 @@ export default function CadastroEvento() {
         }
 
         try {
-            await axios.post(`${BACKEND_URL}/evento`, obj).finally(() => setAnimating(false));
+            await axios.post(`${BACKEND_URL}/evento`, obj)
             Toast.show({
                 type: 'success',
                 text1: 'Sucesso',
                 text2: 'Cadastro com sucesso'
             })
-            navigation.goBack()
+
+            setTimeout(() => {
+                setAnimating(false)
+                navigation.goBack()
+            }, 1000)
         } catch (error) {
             console.log(error)
             Toast.show({

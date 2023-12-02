@@ -3,24 +3,27 @@ import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import HomeCard from '../../components/HomeCard';
 import { BACKEND_URL } from '@env'
 import axios from 'axios';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Home() {
 
   const [animating, setAnimating] = useState(false);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const buscarEventos = async () => {
-      setAnimating(true)
-      try {
-        const response = await axios.get(`${BACKEND_URL}/evento`).finally(() => setAnimating(false));
-        setData(response.data);
-      } catch(error) {
-        console.log(error)
+  useFocusEffect(
+    React.useCallback(() => {
+      const buscarEventos = async () => {
+        setAnimating(true);
+        try {
+          const response = await axios.get(`${BACKEND_URL}/evento`).finally(() => setAnimating(false));
+          setData(response.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
-    buscarEventos()
-  }, [])
+      buscarEventos();
+    }, []) 
+  );
 
   return (
     <View style={styles.container}>

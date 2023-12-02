@@ -10,7 +10,15 @@ export default function PerfilIcon(props) {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.personIcon} onPress={handleChangePhoto}>
-                <Image style={styles.personIcon} source={{ uri: personImage }} onError={(error) => console.error('Erro ao carregar a imagem:', error.nativeEvent.error)} />
+                <Image 
+                    style={styles.personIcon}
+                    source={
+                        personImage
+                            ? { uri: personImage }
+                            : require('../../../assets/greyscreen.png')
+                    }
+                    onError={(error) => console.error('Erro ao carregar a imagem:', error.nativeEvent.error)} 
+                />
             </TouchableOpacity>
             <Text style={[styles.personName, { color, fontSize }]}>{personName}</Text>
         </View>
