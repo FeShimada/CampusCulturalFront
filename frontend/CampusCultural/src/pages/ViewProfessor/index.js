@@ -36,8 +36,8 @@ export default function ViewProfessor() {
             </View>
 
             <View style={styles.containerBotoes}>
-                <TouchableOpacity >
-                    <Icon style={styles.plus} name='plus' size={50} />
+                <TouchableOpacity onPress={() => navigation.navigate('CadastroEvento')}>
+                    <Icon style={styles.plus} name='plus' size={50} onPress={() => navigation.navigate('CadastroEvento')} />
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => navigation.navigate('ViewPerfilAluno')} >

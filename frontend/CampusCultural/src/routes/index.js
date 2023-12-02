@@ -12,6 +12,7 @@ import ViewPerfilAluno from '../pages/ViewPerfilAluno';
 import PasswordRecovery from '../pages/PasswordRecovery';
 import Cadastro from '../pages/Cadastro';
 import { TipoUsuarioEnum } from '../enumerations/tipo-usuario-enum';
+import CadastroEvento from '../pages/CadatroEvento';
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -52,6 +53,7 @@ export default function Routes() {
       <Stack.Navigator>
         <Stack.Screen name="Perfil" component={PerfilComponent} options={{ headerShown: false }} />
         <Stack.Screen name="ViewPerfilAluno" component={ViewPerfilAluno} options={{ headerShown: false }} />
+        <Stack.Screen name="CadastroEvento" component={CadastroEvento} options={{ headerShown: false }} />
       </Stack.Navigator>
     );
   };

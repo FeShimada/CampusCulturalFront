@@ -8,8 +8,7 @@ import { BACKEND_URL } from '@env'
 import * as ImagePicker from 'expo-image-picker';
 
 export default function ViewPerfilAluno() {
-
-    const [data, setData] = useState({});
+    
     const [animating, setAnimating] = useState(false);
     const [initialValues, setInitialValues] = useState({
         dsNome: '',

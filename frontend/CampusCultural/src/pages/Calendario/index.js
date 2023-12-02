@@ -32,7 +32,7 @@ export default function Calendario() {
         style={{ marginTop: 35 }}
         contentContainerStyle={{ marginHorizontal: 20 }}
         data={data}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={item => String(item.idEvento)}
         renderItem={({ item }) =>
           <CalendarioCard
             eventDate={item.dtEvento}
