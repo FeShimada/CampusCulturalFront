@@ -16,7 +16,12 @@ export default function Calendario() {
         setAnimating(true);
         try {
           const response = await axios.get(`${BACKEND_URL}/evento`).finally(() => setAnimating(false));
-          setData(response.data);
+          const sortedData = response.data.slice().sort((a, b) => {
+            const dateA = new Date(a.dtEvento);
+            const dateB = new Date(b.dtEvento);
+            return dateA - dateB;
+          });
+          setData(sortedData);
         } catch (error) {
           console.log(error);
         }
