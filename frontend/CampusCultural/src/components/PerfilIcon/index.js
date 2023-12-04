@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
     },
     personName: {
         fontWeight: 'bold',
-        marginTop: 15
+        marginTop: 15,
+        width: 150,
+        textAlign: 'center'
     },
 })
 
