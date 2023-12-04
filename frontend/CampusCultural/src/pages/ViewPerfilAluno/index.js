@@ -15,6 +15,7 @@ export default function ViewPerfilAluno() {
         dsSobrenome: '',
         dsEmail: '',
         senha: '',
+        dsUsuario: ''
     });
     const { tpPessoa, setTpPessoa } = useContext(TipoPessoaContext)
 
@@ -87,6 +88,14 @@ export default function ViewPerfilAluno() {
                     value={initialValues.dsSobrenome}
                     onChangeText={(text) => {
                         setInitialValues({ ...initialValues, dsSobrenome: text })
+                    }}
+                />
+                <Text style={styles.label}>Descrição</Text>
+                <TextInput
+                    style={styles.input}
+                    value={initialValues.dsUsuario}
+                    onChangeText={(text) => {
+                        setInitialValues({ ...initialValues, dsUsuario: text })
                     }}
                 />
                 <Text style={styles.label}>Email</Text>
